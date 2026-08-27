@@ -1,0 +1,75 @@
+﻿<Page
+    x:Class="Synaptrix8._1.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Synaptrix8._1"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Margin="19,25,19,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="SYNAPTRIX" Style="{ThemeResource TitleTextBlockStyle}"/>
+            <TextBlock Text="settings" Style="{ThemeResource HeaderTextBlockStyle}"/>
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+
+                <TextBlock Text="Matrix Profile" Style="{ThemeResource BodyTextBlockStyle}" FontWeight="Bold" Foreground="{ThemeResource PhoneAccentBrush}" Margin="0,0,0,10"/>
+
+                <Border Width="120" Height="120" Background="{ThemeResource PhoneMidBrush}" CornerRadius="60" Margin="0,12,0,12" HorizontalAlignment="Left">
+                    <Grid>
+                        <Image x:Name="ProfileImage" Stretch="UniformToFill"/>
+                        <TextBlock Text="?" x:Name="ProfileInitial" FontSize="48" FontWeight="SemiBold" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Grid>
+                </Border>
+                <Button x:Name="ChangeAvatarButton" Content="Change Picture" HorizontalAlignment="Left" Click="OnChangeAvatarClicked" Margin="0,0,0,12"/>
+
+                <TextBlock Text="Display Name:" Style="{ThemeResource BaseTextBlockStyle}"/>
+                <Grid Margin="0,4,0,20">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="DisplayNameBox" Grid.Column="0" PlaceholderText="Loading..." Margin="0,0,8,0"/>
+                    <Button x:Name="SaveNameButton" Grid.Column="1" Content="Update" Click="OnSaveNameClicked"/>
+                </Grid>
+                <TextBlock x:Name="ProfileStatusText" Foreground="{ThemeResource PhoneAccentBrush}" Margin="0,-10,0,20" FontSize="14"/>
+
+                <TextBlock Text="Bridge Profile Mapping" Style="{ThemeResource BodyTextBlockStyle}" FontWeight="Bold" Foreground="{ThemeResource PhoneAccentBrush}" Margin="0,0,0,10"/>
+                <TextBlock Text="Enter your unique user IDs so the app can identify your messages across networks." TextWrapping="Wrap" Style="{ThemeResource BaseTextBlockStyle}" Margin="0,0,0,12"/>
+
+                <TextBlock Text="Facebook/Meta ID:" Style="{ThemeResource BaseTextBlockStyle}"/>
+                <TextBox x:Name="FacebookTextBox" PlaceholderText="e.g., 10000123456789" Margin="0,4,0,16"/>
+
+                <TextBlock Text="Discord ID:" Style="{ThemeResource BaseTextBlockStyle}"/>
+                <TextBox x:Name="DiscordTextBox" PlaceholderText="e.g., 23456789012345" Margin="0,4,0,16"/>
+
+                <TextBlock Text="Telegram ID:" Style="{ThemeResource BaseTextBlockStyle}"/>
+                <TextBox x:Name="TelegramTextBox" PlaceholderText="e.g., 543210987" Margin="0,4,0,24"/>
+
+                <TextBlock Text="Google Messages ID:" Style="{ThemeResource BaseTextBlockStyle}"/>
+                <TextBox x:Name="GMessagesIdBox" PlaceholderText="e.g. _gmessages_" Margin="0,4,0,24"/>
+                
+                <TextBlock Text="Data &amp; Sync" Style="{ThemeResource BodyTextBlockStyle}" FontWeight="Bold" Foreground="{ThemeResource PhoneAccentBrush}" Margin="0,0,0,10"/>
+
+                <ToggleSwitch x:Name="AutoSyncToggle" Header="Auto-sync on launch" OffContent="Manual" OnContent="Automatic" Margin="0,0,0,5"/>
+                <ToggleSwitch x:Name="AutoDownloadToggle" Header="Auto-download media" OffContent="Tap to Download" OnContent="Download Automatically" Margin="0,0,0,24"/>
+
+                <TextBlock Text="Account Details" Style="{ThemeResource BodyTextBlockStyle}" FontWeight="Bold" Foreground="{ThemeResource PhoneAccentBrush}" Margin="0,0,0,10"/>
+                <TextBlock x:Name="ServerStatusTextBlock" Text="Checking status..." Style="{ThemeResource BodyTextBlockStyle}" TextWrapping="Wrap" Margin="0,0,0,15"/>
+
+                <Button Content="Save App Settings" HorizontalAlignment="Stretch" Click="OnSaveClicked" Margin="0,0,0,12"/>
+
+                <Button Content="Logout &amp; Clear Data" Click="OnLogoutClicked" HorizontalAlignment="Stretch" BorderBrush="Red" Foreground="Red"/>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

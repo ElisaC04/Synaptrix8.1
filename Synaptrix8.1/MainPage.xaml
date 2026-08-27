@@ -1,0 +1,159 @@
+﻿<Page
+    x:Class="Synaptrix8._1.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Synaptrix8._1"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <DataTemplate x:Key="ChatItemTemplate">
+            <Grid Margin="0,0,0,16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Column="0" 
+                        Width="52" 
+                        Height="52" 
+                        Background="{ThemeResource PhoneAccentBrush}" 
+                        CornerRadius="26" 
+                        Margin="0,0,12,0">
+                    <Grid>
+                        <TextBlock Text="{Binding Initial}" 
+                                   FontSize="24" 
+                                   FontWeight="SemiBold" 
+                                   Foreground="White"
+                                   HorizontalAlignment="Center" 
+                                   VerticalAlignment="Center"/>
+                        <Image Source="{Binding AvatarUrl}" Stretch="UniformToFill"/>
+                    </Grid>
+                </Border>
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding DisplayName}" 
+                               FontSize="20" 
+                               FontWeight="SemiBold" 
+                               MaxLines="1" 
+                               TextTrimming="CharacterEllipsis"/>
+                    <TextBlock Text="{Binding LastMessage}" 
+                               FontSize="14" 
+                               Foreground="{ThemeResource PhoneMidBrush}" 
+                               MaxLines="1" 
+                               TextTrimming="CharacterEllipsis" 
+                               Margin="0,2,0,0"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" 
+                            HorizontalAlignment="Right" 
+                            VerticalAlignment="Top" 
+                            Margin="8,4,0,0">
+                    <TextBlock Text="{Binding FormattedTimestamp}" 
+                               FontSize="12" 
+                               Foreground="{ThemeResource PhoneMidBrush}" 
+                               HorizontalAlignment="Right"/>
+                    <Border Background="{Binding BadgeColor}" 
+                            CornerRadius="2" 
+                            Padding="4,1" 
+                            Margin="0,4,0,0" 
+                            HorizontalAlignment="Right">
+                        <TextBlock Text="{Binding BridgeLabel}" 
+                                   FontSize="10" 
+                                   FontWeight="Bold" 
+                                   Foreground="White"/>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+    </Page.Resources>
+
+    <Grid>
+        <Pivot Title="SYNAPSE CLIENT">
+
+            <PivotItem Header="invites">
+                <ListView x:Name="InvitesListView" 
+                          Padding="16,0,16,0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="0,0,0,12" Background="{ThemeResource PhoneAccentBrush}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0" Margin="12,8">
+                                    <TextBlock Text="{Binding RoomName}" FontSize="18" FontWeight="Bold" Foreground="White" TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock Text="{Binding Inviter}" FontSize="14" Foreground="White" Opacity="0.8" TextTrimming="CharacterEllipsis"/>
+                                </StackPanel>
+
+                                <Button Grid.Column="1" Content="Join" Margin="8" 
+                                        Foreground="White" BorderBrush="White"
+                                        Click="OnJoinInviteClicked"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </PivotItem>
+            
+            <PivotItem Header="recent">
+                <ListView x:Name="RecentListView" 
+                          ItemTemplate="{StaticResource ChatItemTemplate}" 
+                          SelectionMode="None" 
+                          IsItemClickEnabled="True" 
+                          ItemClick="OnChatItemClicked"
+                          Padding="16,0,16,0"/>
+            </PivotItem>
+
+            <PivotItem Header="messenger">
+                <ListView x:Name="MessengerListView" 
+                          ItemTemplate="{StaticResource ChatItemTemplate}" 
+                          SelectionMode="None" 
+                          IsItemClickEnabled="True" 
+                          ItemClick="OnChatItemClicked"
+                          Padding="16,0,16,0"/>
+            </PivotItem>
+
+            <PivotItem Header="discord">
+                <ListView x:Name="DiscordListView" 
+                          ItemTemplate="{StaticResource ChatItemTemplate}" 
+                          SelectionMode="None" 
+                          IsItemClickEnabled="True" 
+                          ItemClick="OnChatItemClicked"
+                          Padding="16,0,16,0"/>
+            </PivotItem>
+
+            <PivotItem Header="telegram">
+                <ListView x:Name="TelegramListView" 
+                          ItemTemplate="{StaticResource ChatItemTemplate}" 
+                          SelectionMode="None" 
+                          IsItemClickEnabled="True" 
+                          ItemClick="OnChatItemClicked"
+                          Padding="16,0,16,0"/>
+            </PivotItem>
+
+            <PivotItem Header="messages">
+                <ListView x:Name="GMessagesListView" 
+                          ItemTemplate="{StaticResource ChatItemTemplate}" 
+                          SelectionMode="None" 
+                          IsItemClickEnabled="True" 
+                          ItemClick="OnChatItemClicked"
+                          Padding="16,0,16,0"/>
+            </PivotItem>
+        </Pivot>
+    </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Icon="Sync" Label="sync" Click="OnSyncClicked"/>
+            <AppBarButton Icon="Add" Label="new chat" Click="OnNewChatClicked"/>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Label="about" Click="OnAboutClicked"/>
+                <AppBarButton Icon="Setting" Label="settings" Click="OnSettingsClicked"/>
+            </CommandBar.SecondaryCommands>
+        </CommandBar>
+    </Page.BottomAppBar>
+</Page>

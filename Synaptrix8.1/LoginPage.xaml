@@ -1,0 +1,50 @@
+﻿<Page
+    x:Class="Synaptrix8._1.LoginPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Synaptrix8._1"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <StackPanel Margin="16,40,16,0">
+            <TextBlock Text="SYNAPTRIX8.1" 
+                       FontSize="24" 
+                       FontWeight="Bold" 
+                       Foreground="{ThemeResource PhoneAccentBrush}"
+                       Margin="0,0,0,32"/>
+
+            <TextBlock Text="Homeserver URL" FontSize="16" Margin="0,0,0,4"/>
+            <TextBox x:Name="ServerUrlBox" 
+                     Text="https://yourdomain.duckdns.org:8443" 
+                     InputScope="Url" 
+                     Margin="0,0,0,16"/>
+
+            <TextBlock Text="Username" FontSize="16" Margin="0,0,0,4"/>
+            <TextBox x:Name="UsernameBox" 
+                     Margin="0,0,0,16"/>
+
+            <TextBlock Text="Password" FontSize="16" Margin="0,0,0,4"/>
+            <PasswordBox x:Name="PasswordBox" 
+                         Margin="0,0,0,32"/>
+
+            <Button x:Name="LoginButton" 
+                    Content="Log In" 
+                    HorizontalAlignment="Stretch" 
+                    Click="OnLoginClicked"/>
+
+            <ProgressBar x:Name="LoginProgress" 
+                         IsIndeterminate="True" 
+                         Visibility="Collapsed" 
+                         Margin="0,16,0,0"/>
+
+            <TextBlock x:Name="ErrorText" 
+                       Foreground="Red" 
+                       TextWrapping="Wrap" 
+                       Margin="0,16,0,0" 
+                       Visibility="Collapsed"/>
+        </StackPanel>
+    </Grid>
+</Page>
