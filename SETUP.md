@@ -717,3 +717,8 @@ And you should instantly get flooded by invites! Each invite corresponds to a gr
 
 And now all you have to do is download the app onto your Windows Phone 8.1 or 10. You can get the latest appxbundle from the [releases](https://github.com/ElisaC04/Synaptrix8.1/releases) page!
 
+You will login the exact way you did into Element. One quirk of this setup is that messages sent by you on other platforms (for example the official messenger app) by default will show as they are a separate user in chats. Because in the Synapse databse they are! So to make every message sent by **you** show up as sent by you inside your chats I added a feature in the settings menu where you can add your specific bridge ID's.
+
+In the case of messenger you have to open the Element app, open a chat and find a message sent by your facebook user and click on the profile picture. There you will see its metaID, copy just the numbers noting more or less. And this is what you paste in the metaID field, if done properly you will see every message sent
+by your facebook user as actually sent by you!
+
