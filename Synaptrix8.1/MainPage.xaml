@@ -72,7 +72,7 @@
     </Page.Resources>
 
     <Grid>
-        <Pivot Title="SYNAPSE CLIENT">
+        <Pivot Title="SYNAPTRIX8.1">
 
             <PivotItem Header="invites">
                 <ListView x:Name="InvitesListView" 
