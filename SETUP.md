@@ -715,5 +715,5 @@ And you should instantly get flooded by invites! Each invite corresponds to a gr
 
 # Synaptrix8.1
 
-And now all you have to do is download the app onto your Windows Phone 8.1 or 10. You can get the latest appxbundle from the (releases)[https://github.com/ElisaC04/Synaptrix8.1/releases] page!
+And now all you have to do is download the app onto your Windows Phone 8.1 or 10. You can get the latest appxbundle from the [releases](https://github.com/ElisaC04/Synaptrix8.1/releases) page!
 
