@@ -3,7 +3,7 @@
   
 
 <p align="center"\>  
- <img width="99" height="99" alt="Synaptrix8.1 Logo" src="C:\\Users\\Elisa\\Pictures\\Synaptrix8.1.png" /\>  
+ <img width="99" height="99" alt="Synaptrix8.1" src="https://github.com/user-attachments/assets/ff77849c-da96-4935-9f65-0ffcba0dfdaa" />
 </p\>
 
   
@@ -430,6 +430,11 @@ sudo chmod 640 /etc/matrix-synapse/homeserver.yaml
 
 `public_baseurl: "https://DOMAIN:8443/"`
 
+This is what your file should look like (the config_file_list line you will get to at the end of this document)
+
+<img width="2080" height="1431" alt="homeserver.yaml" src="https://github.com/user-attachments/assets/d18a9641-0b8f-4878-a510-f00d062e9bca" />
+
+
 ### nginx
 
 **12.1** Create the site configuration
@@ -589,6 +594,12 @@ permissions:
 	"DOMAIN": user
 	"@synapseuser:DOMAIN": admin
 ```
+Search for the **backfill:** block and make sure it is enabled
+
+```
+backfill:
+	enabled: true
+```
 
 **14.8** Now save and exit the file
 
@@ -702,7 +713,7 @@ And you should instantly get flooded by invites! Each invite corresponds to a gr
 
 *You wont be able to see your entire past message history. It will mostly show from the point the bridge first synced with your facebook account. But the backlogging will periodically download message history.*
 
-# Synaptrics8.1
+# Synaptrix8.1
 
-And now all you have to do is download the app onto your Windows Phone, compatible with Windows Phone 8.1 and Windows Phone 10.
+And now all you have to do is download the app onto your Windows Phone 8.1 or 10. You can get the latest appxbundle from the (releases)[https://github.com/ElisaC04/Synaptrix8.1/releases] page!
 
