@@ -7,8 +7,27 @@
 </p\>
 
 # Table of contents
+- [Requirements](#req)
+- [The brief architecture](#arch)
+- [Risks](#risks)
+- [Setting up Debian](#sdeb)
+  - [Create the virtual machine](#vm)
+  - [Installing Debian](#ideb)
+  - [Installing dependencies](#dep)
+- [Network and DynamicDNS](#net)
+  - [Port forwarding](#pf)
+  - [DynamicDNS](#dns)
+- [Install/configure Synapse, Postgre, nginx and UFW](#combined)
+  - [PostgreSQL](#sql)
+  - [Synapse](#synapse)
+  - [nginx](#nginx)
+  - [UFW](#ufw)
+- [Configuring the bridges](#bridges)
+  - [Systemd service](#systemd)
+- [Configure the bridge bot](#bot)
+- [Synaptrix8.1](#synaptrix)
 
-## Requirements <a name="req"></a>
+## Requirements <a name="req" id="req"></a>
 
 - A linux (virtual)machine  
 I configured my server on Debian so I wrote this guide for it. While the setup shouldn’t differ for similar distributions, I recommend using Debian.
@@ -20,7 +39,7 @@ I don’t see why WSL couldn’t work but you should do your own research if tha
 
 - Patience
 
-## The brief architecture <a name="arch"></a>
+## The brief architecture <a name="arch" id="arch"></a>
 
 The main idea is that instead of directly talking to the facebook, google, telegram etc. servers from our Windows Phone we have our Debian machine take care of the communication. So from your phone you will connect to your own server that will have every chat and contact (since it downloads it from the official servers) and every message you send first gets sent to your server, and in your name it sends it to the official servers. Of course from your perspective you only see an ordinary chat room.
 
@@ -30,7 +49,7 @@ The main piece of software is Synapse, a matrix homeserver. We will have to conf
 
 In the Synaptrix8.1 app all you will have to do is login and it will sort every message into its own tab, depending on what service it came from. But you can also login to your server from any other matrix client (for example Element (classic) ) so not only can you utilize it from your Windows Phone but any other device you can get a matrix client on.
 
-## Risks <a name="risks"></a>
+## Risks <a name="risks" id="risks"></a>
 
 
 You have to be aware of the fact that in some way or form you are interacting with official services in a way in which they did not intend. It is annoying but it is a fact. So we have to be careful while setting up parameters. For example if you configure your mautrix-meta (messenger) bridge to try and download EVERY chat history at once every couple of seconds there is a very high chance your account gets flagged and banned.
@@ -63,7 +82,7 @@ Is it less secure? Yes. Does this mean HTTPS is not secure? No. But its somethin
 
 **I did this out of my love for this platform, to learn and of course for my enjoyment. :)**
 
-# 1 Setting up Debian <a name="sdeb"></a>
+# 1 Setting up Debian <a name="sdeb" id="sdeb"></a>
 
 If you already have a machine running Debian make sure it has a static IP address. If its a VM make sure its network adapter is either bridged or if its NAT make sure TCP port 8443 is forwarded.
 
@@ -102,7 +121,7 @@ Go to the [debian website](https://www.debian.org/distrib/) and I recommend down
 
   
 
-### 4 **Create the virtual machine**  <a name="vm"></a>
+### 4 **Create the virtual machine**  <a name="vm" id="vm"></a>
 
 **4.1** Inside VirtualBox click on New, then name your machine and specify where the ISO you downloaded is. Uncheck “Proceed with Unattended Installation”
 
@@ -141,7 +160,7 @@ In windows you can do that by opening up the Windows Defender Firewall and selec
 **4.14** Name the rule something like “Synapse inbound”.  
   
   
-### 5 **Installing Debian** <a name="ideb"></a>
+### 5 **Installing Debian** <a name="ideb" id="ideb"></a>
   
 **5.1** With the Debian VM selected click on Start. It should boot up to a screen with a couple options, select Graphical install.  
   
@@ -269,7 +288,7 @@ sudo reboot
 
 **With this the base for our server is good to go!**
 
-### 6 **Installing dependencies** <a name="dep"></a>
+### 6 **Installing dependencies** <a name="dep" id="dep"></a>
 
 To make it simpler down the line we will install every dependency needed by the database, web server and certificate software in one go.
 
@@ -283,7 +302,7 @@ sudo apt install -y curl wget gnupg2 lsb-release apt-transport-https ufw postgre
 
 ---
 
-# 7 Network and DynamicDNS <a name="net"></a>
+# 7 Network and DynamicDNS <a name="net" id="net"></a>
 
 You should be familiar with your routers model as every step involving the router will be unique to it, if you don’t know how you will have to search online.
 
@@ -299,7 +318,7 @@ So if you configured NAT for your VM or you have a dedicated machine for Debian,
 
 If you are using Bridged mode for your VM you will have to use the VM’s MAC address to set the IP.
 
-### 8 **Port forwarding** <a name="pf"></a>
+### 8 **Port forwarding** <a name="pf" id="pf"></a>
 
 Navigate to your routers port forwarding interface. Make the inside and outside port TCP 8443 and set the local IP/host to the static IP you set beforehand. Leave anything regarding outside addresses, connection sources etc. blank.
 Now your server can be reached through your routers outside address, through the 8443 port. If this is the router that your ISP connects to then you are good to go here. If you have another router(s) in front of yours then you need to create this port forwarding rule on every single one, of course the local address being not the server this time, but the routers outside address that you last configured port
@@ -314,7 +333,7 @@ tnc IP -Port 8443
 
 If everything is good is should almost instantly say it succeeded.
 
-### 9 **DynamicDNS** <a name="dns"></a>
+### 9 **DynamicDNS** <a name="dns" id="dns"></a>
 
 So this is great for us because it gives us consistent access from outside into our local network. Instead of having to keep track somehow of our public IP address we just register, in our case to DuckDNS and remember that domain, which will always keep track of our public IP.
 For this to work we need a device to be online that can run the DuckDNS software to keep track and report the public IP. This can be essentially any device thats behind your router, even the router itself if it supports it. If your router does (check around in settings or check online) I recommend using it, as the router is always online and essentially its a task that we balanced over to the router.
@@ -391,7 +410,7 @@ sudo chown root:root /etc/letsencrypt/duckdns-hook.sh
 sudo certbot certonly --manual --preferred-challenges dns --manual-auth-hook /etc/letsencrypt/duckdns-hook.sh -d DOMAIN
 ```
 	
-# 10-13 Installing and configuring Synapse, PostgreSQL, nginx and firewall <a name="combined"></a>
+# 10-13 Installing and configuring Synapse, PostgreSQL, nginx and firewall <a name="combined" id="combined"></a>
 
 *The setup follows the official guides*
 https://element-hq.github.io/synapse/latest/setup/installation.html
@@ -415,7 +434,7 @@ CREATE DATABASE synapse OWNER synapse LC_COLLATE 'C' LC_CTYPE 'C' TEMPLATE templ
 
 *exit the SQL prompt by typing `\q`*
 
-### 11 Synapse <a name="synapse"></a>
+### 11 Synapse <a name="synapse" id="synapse"></a>
 
 **11.1** Download the archive keyring
 
@@ -502,7 +521,7 @@ This is what your file should look like (the app_service_config_files line you w
 <img width="2080" height="1431" alt="homeserver.yaml" src="https://github.com/user-attachments/assets/d18a9641-0b8f-4878-a510-f00d062e9bca" />
 
 
-### 12 nginx <a name="nginx"></a>
+### 12 nginx <a name="nginx" id="nginx"></a>
 
 **12.1** Create the site configuration
 
@@ -556,7 +575,7 @@ sudo nginx -t
 sudo systemctl restart nginx
 ```
 	
-### 13 UFW firewall
+### 13 UFW firewall <a name="ufw" id="ufw"></a>
 
 **13.1** Run these commands to enable port 8443 and 22 and deny anything else
 
@@ -574,7 +593,7 @@ sudo ufw enable
 https://DOMAIN:8443/_matrix/client/versions
 ```
 
-# 14 Configuring the bridges
+# 14 Configuring the bridges <a name="bridges" id="bridges"></a>
 
 I will detail how to configure the messenger (mautrix-meta) bridge. But every single step is the same for all the GO based bridges, except the users and direcotries (because every birdge needs their own), the config file itself, and the systemd script at the end. So for example if you are installing mautrix-telegram replace every instance of `meta` to `telegram`.
 
@@ -684,7 +703,9 @@ backfill:
 
 **14.9** Now we generate the registration file
 
-`sudo -u mautrix-meta ./mautrix-meta-amd64 -generate`
+```
+sudo -u mautrix-meta ./mautrix-meta-amd64 -generate
+```
 
 **14.10** And we copy it over to the synapse directory
 
@@ -696,7 +717,9 @@ sudo chmod 640 /etc/matrix-synapse/mautrix-meta.yaml
 
 **14.11** And now we update the synapse config
 
-`sudo nano /etc/matrix-synapse/homeserver.yaml`
+```
+sudo nano /etc/matrix-synapse/homeserver.yaml
+```
 
 And we add this block at the bottom of the file. *If you are adding another config you only have to add in a new `- "/etc/matrix-synapse/mautrix-XXX.yaml"` under the existing one, make sure the new line is also indented
 
@@ -719,7 +742,7 @@ sudo chmod 600 /opt/mautrix-meta/config.yaml
 sudo systemctl restart matrix-synapse
 ```
 
-### Systemd service
+### Systemd service <a name="systemd" id="systemd"></a>
 
 **15.1** Create a new systemd file
 
@@ -762,7 +785,7 @@ sudo systemctl daemon-reload
 sudo systemctl enable --now mautrix-meta
 ```
 
-# Configuring the messenger bridge bot
+# Configuring the messenger bridge bot <a name="bot" id="bot"></a>
 
 For this section I highly recommend you use the Element app on your desktop, but you can use it on Andoird/iOS too, just to make sure it goes smoothly.
 
@@ -796,7 +819,7 @@ And you should instantly get flooded by invites! Each invite corresponds to a gr
 
 *You wont be able to see your entire past message history. It will mostly show from the point the bridge first synced with your facebook account. But the backlogging will periodically download message history.*
 
-# Synaptrix8.1
+# Synaptrix8.1 <a name="synaptrix" id="synaptrix"></a>
 
 And now all you have to do is download the app onto your Windows Phone 8.1 or 10. You can get the latest appxbundle from the [releases](https://github.com/ElisaC04/Synaptrix8.1/releases) page!
 
