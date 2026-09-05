@@ -11,6 +11,10 @@ The written guide for the server setup is mostly finished and is available [here
 The app will feel most buggy when syncing, especially if you are in a VM it might take time for all the requests to go through. Still lots of the syncing bugginess is thanks to my coding, I will slowly smooth everything out. Id say right now its at a usable state :)
 
 <p align="middle">
+ <a href="https://store.live.net.co/app/821" target="_blank"><img src="https://edge.live.net.co/images/store/2025_GetButton_Black.png" style="width: 256px;" alt="Get Synaptrix8.1 from Live Store"></a>
+</p>
+
+<p align="middle">
  <img width="220" alt="Login screen" src="https://github.com/user-attachments/assets/9a84e435-03e8-4ba1-ab63-5cf9178db41d" />
  <img width="220" alt="Invite screen" src="https://github.com/user-attachments/assets/a9717cb8-7733-4af8-bfef-b2f230c51bb4" />
  <img width="220" alt="Recents screen" src="https://github.com/user-attachments/assets/3fe328c9-90ca-44a6-8d66-ddcff447807d" />
