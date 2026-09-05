@@ -387,13 +387,13 @@ cat /var/log/duckdns.log
 sudo nano /etc/letsencrypt/duckdns-hook.sh
 ```
 
-**9.10** Paste this into the file where DOMAIN is your subdomain and TOKEN is your token
+**9.10** Paste this into the file where MYDOMAIN is your subdomain and MYTOKEN is your token
 
 ```
 #!/bin/bash
-TOKEN="TOKEN"
-DOMAIN="DOMAIN"
-curl -s "https://www.duckdns.org/update?domains=$DOMAIN&token=$TOKEN&txt=$CERTBOT_VALIDATION"
+TOKEN="MYTOKEN"
+DOMAIN="MYDOMAIN"
+curl -s "https://www.duckdns.org/update?domains=$MYDOMAIN&token=$MYTOKEN&txt=$CERTBOT_VALIDATION"
 sleep 30
 ```
 	
@@ -413,6 +413,7 @@ sudo certbot certonly --manual --preferred-challenges dns --manual-auth-hook /et
 # 10-13 Installing and configuring Synapse, PostgreSQL, nginx and firewall <a name="combined" id="combined"></a>
 
 *The setup follows the official guides*
+
 https://element-hq.github.io/synapse/latest/setup/installation.html
 
 https://element-hq.github.io/synapse/latest/postgres.html
